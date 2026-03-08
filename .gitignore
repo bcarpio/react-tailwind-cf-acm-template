@@ -1,0 +1,35 @@
+# Terraform
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/*.out
+terraform/builds/
+terraform/dev.tfvars
+terraform/prd.tfvars
+
+# UI build artifacts
+ui/node_modules/
+ui/dist/
+ui/dist-server/
+
+# WSL artifacts
+*.Zone.Identifier
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+
+# Scratch
+.scratch/
+
+# Logs
+*.log

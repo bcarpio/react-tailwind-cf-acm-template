@@ -1,0 +1,8 @@
+# Copy this file to backend.tf and update with your S3 state bucket
+terraform {
+  backend "s3" {
+    bucket = "YOUR-TERRAFORM-STATE-BUCKET"
+    key    = "YOUR-APP-NAME.tfstate"
+    region = "us-west-2"
+  }
+}

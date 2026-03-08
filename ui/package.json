@@ -1,0 +1,47 @@
+{
+  "name": "site-ui",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build:client:dev": "vite build --mode development",
+    "build:client:prd": "vite build --mode production",
+    "build:server": "vite build --ssr src/entry-server.tsx --outDir dist-server",
+    "generate:static": "node scripts/generate-static.js",
+    "build:dev": "npm run build:client:dev && npm run build:server && npm run generate:static",
+    "build:prd": "npm run build:client:prd && npm run build:server && npm run generate:static",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "deploy:dev": "aws s3 sync dist/ s3://$(aws ssm get-parameter --name /${SITE_ENV:-dev}/${SITE_DOMAIN}/s3/frontend_site --query Parameter.Value --output text) --delete",
+    "deploy:prd": "aws s3 sync dist/ s3://$(aws ssm get-parameter --name /prd/${SITE_DOMAIN}/s3/frontend_site --query Parameter.Value --output text) --delete",
+    "invalidate:dev": "aws cloudfront create-invalidation --distribution-id $(aws ssm get-parameter --name /dev/${SITE_DOMAIN}/cloudfront/frontend_distribution_id --query Parameter.Value --output text) --paths '/*'",
+    "invalidate:prd": "aws cloudfront create-invalidation --distribution-id $(aws ssm get-parameter --name /prd/${SITE_DOMAIN}/cloudfront/frontend_distribution_id --query Parameter.Value --output text) --paths '/*'",
+    "publish:dev": "npm run build:dev && npm run deploy:dev && npm run invalidate:dev",
+    "publish:prd": "npm run build:prd && npm run deploy:prd && npm run invalidate:prd"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.5.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/node": "^24.0.12",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react-swc": "^3.8.0",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "glob": "^11.0.3",
+    "globals": "^15.15.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^6.3.5"
+  }
+}
