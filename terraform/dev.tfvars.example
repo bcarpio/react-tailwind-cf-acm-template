@@ -1,3 +1,11 @@
 environment = "dev"
 app_name    = "example.com"
 aws_region  = "us-west-2"
+
+# WAF (optional) — start in count-mode to observe false-positives before blocking
+waf_enabled = false
+waf_managed_rules = [
+  { name = "AWSManagedRulesCommonRuleSet", priority = 1, override_action = "count" },
+  { name = "AWSManagedRulesKnownBadInputsRuleSet", priority = 2, override_action = "count" },
+  { name = "AWSManagedRulesAmazonIpReputationList", priority = 3, override_action = "count" },
+]

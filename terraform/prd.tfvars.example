@@ -1,3 +1,11 @@
 environment = "prd"
 app_name    = "example.com"
 aws_region  = "us-west-2"
+
+# WAF — set override_action = "none" to enforce block, "count" to log only
+waf_enabled = true
+waf_managed_rules = [
+  { name = "AWSManagedRulesCommonRuleSet", priority = 1, override_action = "none" },
+  { name = "AWSManagedRulesKnownBadInputsRuleSet", priority = 2, override_action = "none" },
+  { name = "AWSManagedRulesAmazonIpReputationList", priority = 3, override_action = "none" },
+]

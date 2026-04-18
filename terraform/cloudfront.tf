@@ -114,6 +114,9 @@ module "frontend_cdn" {
   # Default document for SPA
   default_root_object = "index.html"
 
+  # Attach WAF WebACL (when enabled)
+  web_acl_id = var.waf_enabled ? aws_wafv2_web_acl.frontend[0].arn : null
+
   # Custom error responses for SPA routing
   custom_error_response = [
     {
